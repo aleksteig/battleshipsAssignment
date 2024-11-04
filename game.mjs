@@ -6,6 +6,8 @@ import createMenu from "./utils/menu.mjs";
 import createMapLayoutScreen from "./game/mapLayoutScreen.mjs";
 import createInnBetweenScreen from "./game/innbetweenScreen.mjs";
 import createBattleshipScreen from "./game/battleshipsScreen.mjs";
+import { setTimeout } from "timers/promises";
+//import { changeWindowSize, openWindow } from "./utils/windowResolutionChange.mjs";
 
 const MAIN_MENU_ITEMS = buildMenu();
 
@@ -25,21 +27,26 @@ let mainMenuScene = null;
 })();
 
 function update() {
-    currentState.update(GAME_FPS);
-    currentState.draw(GAME_FPS);
-    if (currentState.transitionTo != null) {
-        currentState = currentState.next;
-        print(ANSI.CLEAR_SCREEN, ANSI.CURSOR_HOME);
-    }
+    if (process.stdout.columns >= 146 && process.stdout.rows >= 27){
+        currentState.update(GAME_FPS);
+        currentState.draw(GAME_FPS);
+        if (currentState.transitionTo != null) {
+            currentState = currentState.next;
+            print(ANSI.CLEAR_SCREEN, ANSI.CURSOR_HOME);
+        }
+    } else {
+        console.log("Your window is too small");
+        process.exit();
+    };
 }
 
 // Suport / Utility functions ---------------------------------------------------------------
-
 function buildMenu() {
     let menuItemCount = 0;
-    return [
+    return [ //146 x 27
         {
             text: "Start Game", id: menuItemCount++, action: function () {
+                //openWindow();
                 clearScreen();
                 let innbetween = createInnBetweenScreen();
                 innbetween.init(`SHIP PLACMENT\nFirst player get ready.\nPlayer two look away`, () => {

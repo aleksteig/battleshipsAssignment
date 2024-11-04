@@ -50,6 +50,7 @@ function createMapLayoutScreen() {
                 if (this.map[row][column] !== 0) {
                     return false;
                 }
+
             }
 
             return true;
@@ -60,7 +61,7 @@ function createMapLayoutScreen() {
             for (let i = 0; i < ship.size; i++) {
                 const column = this.isHorizontal ? this.cursorColumn + i : this.cursorColumn;
                 const row = this.isHorizontal ? this.cursorRow : this.cursorRow + i;
-                this.map[row][column] = ship.symbole;
+                this.map[row][column] = ship.symbol;
             }
 
             this.placedShips.push({
