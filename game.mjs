@@ -7,6 +7,7 @@ import createMapLayoutScreen from "./game/mapLayoutScreen.mjs";
 import createInnBetweenScreen from "./game/innbetweenScreen.mjs";
 import createBattleshipScreen from "./game/battleshipsScreen.mjs";
 import { setTimeout } from "timers/promises";
+//import {languageMenuItems} from "./utils/languages.mjs";
 //import { changeWindowSize, openWindow } from "./utils/windowResolutionChange.mjs";
 
 const MAIN_MENU_ITEMS = buildMenu();
@@ -14,8 +15,9 @@ const MAIN_MENU_ITEMS = buildMenu();
 const GAME_FPS = 1000 / 60; // The theoretical refresh rate of our game engine
 let currentState = null;    // The current active state in our finite-state machine.
 let gameLoop = null;        // Variable that keeps a refrence to the interval id assigned to our game loop 
-
+let currentLanguage = 1;
 let mainMenuScene = null;
+let languageMenu = null;
 
 (function initialize() {
     print(ANSI.HIDE_CURSOR);
@@ -43,7 +45,7 @@ function update() {
 // Suport / Utility functions ---------------------------------------------------------------
 function buildMenu() {
     let menuItemCount = 0;
-    return [ //146 x 27
+    return [
         {
             text: "Start Game", id: menuItemCount++, action: function () {
                 //openWindow();
@@ -72,6 +74,31 @@ function buildMenu() {
                 currentState.next = innbetween;
                 currentState.transitionTo = "Map layout";
             }
+        },
+        { text: "Settings", id: menuItemCount++, action: function () {
+            clearScreen();
+            function languagesMenu(){
+                let menuItemCount = 0;
+                return [{
+                    text : "English", id: menuItemCount++, action: function () {
+                        currentLanguage = 1;
+                        currentState.next = mainMenuScene;
+                        currentState.transitionTo = "Main Menu";
+                        }
+                    },
+                    {text : "Norwegian", id: menuItemCount++, action: function () {
+                        currentLanguage = 2;
+                        currentState.next = mainMenuScene;
+                        currentState.transitionTo = "Main Menu";
+                        },
+                    }
+                ];
+            }
+            const languageMenuItems = languagesMenu();
+            languageMenu = createMenu(languageMenuItems);
+            currentState.next = languageMenu;
+            currentState.transitionTo = "Language Menu";
+            },
         },
         { text: "Exit Game", id: menuItemCount++, action: function () { print(ANSI.SHOW_CURSOR); clearScreen(); process.exit(); } },
     ];
