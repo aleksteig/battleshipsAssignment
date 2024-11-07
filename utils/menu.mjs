@@ -36,7 +36,7 @@ function createMenu(menuItems) {
             if (this.isDrawn == false) {
                 this.isDrawn = true;
                 clearScreen();
-                let output = ""
+                let output = "";
 
                 for (let index in menuItems) {
                     let menuItem = menuItems[index]
@@ -53,10 +53,8 @@ function createMenu(menuItems) {
                 }
 
                 printCenterd(output);
-
             }
         }
-
     }
 }
 
