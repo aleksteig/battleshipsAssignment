@@ -8,6 +8,7 @@ import createInnBetweenScreen from "./game/innbetweenScreen.mjs";
 import createBattleshipScreen from "./game/battleshipsScreen.mjs";
 import { setTimeout } from "timers/promises";
 import {languageTexts} from "./utils/languages.mjs";
+import { create } from "domain";
 
 const MAIN_MENU_ITEMS = buildMenu();
 

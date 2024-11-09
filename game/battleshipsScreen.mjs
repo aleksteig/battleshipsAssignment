@@ -1,13 +1,14 @@
 import { GAME_BOARD_DIM, FIRST_PLAYER, SECOND_PLAYER } from "../consts.mjs";
-import { print } from "../utils/io.mjs";
+import KeyBoardManager, { print } from "../utils/io.mjs";
+import createBattleshipMapLayout from "./battleshipsScreenMap.mjs";
 
-
-
-const creteBatleshipScreen = () => {
+const createBattleshipScreen = () => {
 
     let currentPlayer = FIRST_PLAYER;
     let firstPlayerBoard = null;
     let secondPlayerBoard = null;
+    let firstPlayerGuessBoard = null;
+    let secondPlayerGuessBoard = null;
 
 
     function swapPlayer() {
@@ -32,19 +33,33 @@ const creteBatleshipScreen = () => {
         init: function (firstPBoard, secondPBoard) {
             firstPlayerBoard = firstPBoard;
             secondPlayerBoard = secondPBoard;
+            firstPlayerGuessBoard = createBattleshipMapLayout(currentPlayer, secondPBoard);
+            secondPlayerGuessBoard = createBattleshipMapLayout(currentPlayer *= -1, secondPBoard);
         },
 
         update: function (dt) {
             //this.isDrawn = false;
+            if(KeyBoardManager.isEnterPressed()){
+                const targetX = cursorRow;
+                const targetY = cursorColumn;
+
+                const hit = oponentBoard.attack(targetX, targetY);
+
+                if (hit){
+
+                } else {
+                    swapPlayer();
+                }
+
+
+
+            }
         },
 
         draw: function (dr) {
             if (this.isDrawn == false) {
                 this.isDrawn = true;
-
-
-                print("There should be a battleship game here");
-
+                print(firstPlayerGuessBoard);
 
             }
         }
@@ -52,4 +67,6 @@ const creteBatleshipScreen = () => {
     }
 }
 
-export default creteBatleshipScreen;
+
+
+export default createBattleshipScreen;

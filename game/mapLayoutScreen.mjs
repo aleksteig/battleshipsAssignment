@@ -1,4 +1,4 @@
-import { GAME_BOARD_DIM } from "../consts.mjs";
+import { FIRST_PLAYER, GAME_BOARD_DIM } from "../consts.mjs";
 import { ANSI } from "../utils/ansi.mjs";
 import { print, clearScreen } from "../utils/io.mjs";
 import units from "./units.mjs";
@@ -13,6 +13,7 @@ function createMapLayoutScreen() {
 
     const MapLayout = {
         player: null,
+        isPlayerReady: false,
         isDrawn: false,
         next: null,
         transitionTo: null,
@@ -71,6 +72,12 @@ function createMapLayoutScreen() {
                 isHorizontal: this.isHorizontal
             });
 
+            if(this.currentShipIndex < this.ships.length){
+                this.ship = this.ships[this.currentShipIndex]
+            }else{
+                this.isPlayerReady = true;
+            }
+
         },
 
         isPositionInShipPreview: function (column, row) {
@@ -123,9 +130,8 @@ function createMapLayoutScreen() {
                         this.ship = this.ships[this.currentShipIndex];
                     } else {
                         this.next = this.transitionFn();
-                        this.transitionTo = "next state";
+                        this.transitionTo = "Battleship game";
                     }
-
                 }
             }
         },
