@@ -46,7 +46,7 @@ function createMapLayoutScreen() {
 
             for (let i = 0; i < size; i++) {
                 const column = this.isHorizontal ? this.cursorColumn + i : this.cursorColumn;
-                const row = this.isHorizontal ? this.cursorRow + i : this.cursorRow;
+                const row = this.isHorizontal ? this.cursorRow : this.cursorRow + i;
                 if (this.map[row][column] !== 0) {
                     return false;
                 }
